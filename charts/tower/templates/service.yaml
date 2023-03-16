@@ -4,6 +4,7 @@ metadata:
   labels:
     app: tower
   name: tower
+  namespace: kubesphere-system
 spec:
   externalTrafficPolicy: Cluster
   ports:
