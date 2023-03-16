@@ -45,32 +45,32 @@ func (h *handler) generateAgentDeployment(request *restful.Request, response *re
 	cluster := &clusterv1alpha1.Cluster{}
 	if err := h.client.Get(context.Background(), client.ObjectKey{Name: clusterName}, cluster); err != nil {
 		klog.Error(err)
-		response.WriteError(http.StatusInternalServerError, err)
+		response.WriteError(http.StatusInternalServerError, err) // nolint
 		return
 	}
 
 	if cluster.Spec.Connection.Type != clusterv1alpha1.ConnectionTypeProxy {
 		err := fmt.Sprintf("cluster %s is not using proxy connection", cluster.Name)
 		klog.Error(err)
-		response.WriteErrorString(http.StatusBadRequest, err)
+		response.WriteErrorString(http.StatusBadRequest, err) // nolint
 		return
 	}
 
 	proxyAddress, agentImage, err := h.populateProxyAddressAndImage()
 	if err != nil {
 		klog.Error(err)
-		response.WriteError(http.StatusInternalServerError, err)
+		response.WriteError(http.StatusInternalServerError, err) // nolint
 		return
 	}
 
 	var buf bytes.Buffer
 	if err = h.generateDefaultDeployment(cluster, proxyAddress, agentImage, &buf); err != nil {
 		klog.Error(err)
-		response.WriteError(http.StatusInternalServerError, err)
+		response.WriteError(http.StatusInternalServerError, err) // nolint
 		return
 	}
 
-	response.Write(buf.Bytes())
+	response.Write(buf.Bytes()) // nolint
 }
 
 func (h *handler) populateProxyAddressAndImage() (string, string, error) {
