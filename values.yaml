@@ -1,0 +1,10 @@
+backend:
+  enabled: true
+  image:
+    repository: iawia002/tower-extension
+    tag: latest
+
+tower:
+  image:
+    repository: kubespheredev/tower
+    tag: latest

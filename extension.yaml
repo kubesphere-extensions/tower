@@ -1,0 +1,22 @@
+apiVersion: v1
+name: tower
+version: 0.1.0
+displayName:
+  zh: Tower
+  en: Tower
+description:
+  zh: 多集群代理连接插件
+  en: KubeSphere cluster proxy connection extension
+keywords:
+  - multi-cluster
+home: https://kubesphere.io
+sources:
+  - https://github.com/kubesphere-extensions/tower
+kubeVersion: ">=1.19.0"
+ksVersion: ">=3.0.0"
+dependencies:
+  - name: tower
+    condition: tower.enabled
+  - name: backend
+    condition: backend.enabled
+icon: ./favicon.svg

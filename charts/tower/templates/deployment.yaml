@@ -5,6 +5,7 @@ metadata:
     app: tower
     app.kubernetes.io/name: tower
   name: tower
+  namespace: kubesphere-system
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
