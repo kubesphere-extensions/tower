@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/emicklei/go-restful/v3 v3.10.2
-	github.com/iawia002/lia v0.0.0-20230308034856-8792481c376b
+	github.com/iawia002/lia v0.1.0
 	github.com/urfave/cli/v2 v2.25.0
 	k8s.io/api v0.26.2
 	k8s.io/apimachinery v0.26.2
