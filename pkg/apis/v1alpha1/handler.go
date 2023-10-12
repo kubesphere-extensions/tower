@@ -18,8 +18,6 @@ import (
 	"k8s.io/cli-runtime/pkg/printers"
 	"k8s.io/klog/v2"
 	clusterv1alpha1 "kubesphere.io/api/cluster/v1alpha1"
-	"kubesphere.io/kubesphere/pkg/apiserver/config"
-	"kubesphere.io/kubesphere/pkg/constants"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -75,10 +73,10 @@ func (h *handler) generateAgentDeployment(request *restful.Request, response *re
 
 func (h *handler) populateProxyAddressAndImage() (string, string, error) {
 	kubeSphereConfigMap := &corev1.ConfigMap{}
-	if err := h.client.Get(context.Background(), client.ObjectKey{Namespace: constants.KubeSphereNamespace, Name: constants.KubeSphereConfigName}, kubeSphereConfigMap); err != nil {
+	if err := h.client.Get(context.Background(), client.ObjectKey{Namespace: kubeSphereNamespace, Name: kubeSphereConfigName}, kubeSphereConfigMap); err != nil {
 		return "", "", err
 	}
-	kubeSphereConfig, err := config.GetFromConfigMap(kubeSphereConfigMap)
+	kubeSphereConfig, err := getFromConfigMap(kubeSphereConfigMap)
 	if err != nil {
 		return "", "", err
 	}
@@ -92,7 +90,7 @@ func (h *handler) populateProxyAddressAndImage() (string, string, error) {
 	}
 
 	// use service ingress address
-	namespace := constants.KubeSphereNamespace
+	namespace := kubeSphereNamespace
 	parts := strings.Split(kubeSphereConfig.MultiClusterOptions.ProxyPublishService, ".")
 	if len(parts) > 1 && len(parts[1]) != 0 {
 		namespace = parts[1]
@@ -144,7 +142,7 @@ func (h *handler) generateDefaultDeployment(cluster *clusterv1alpha1.Cluster, pr
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name: constants.KubeSphereNamespace,
+			Name: kubeSphereNamespace,
 		},
 	}
 	serviceAccount := corev1.ServiceAccount{
@@ -154,7 +152,7 @@ func (h *handler) generateDefaultDeployment(cluster *clusterv1alpha1.Cluster, pr
 		},
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "tower",
-			Namespace: constants.KubeSphereNamespace,
+			Namespace: kubeSphereNamespace,
 		},
 	}
 	clusterRoleBinding := rbacv1.ClusterRoleBinding{
@@ -174,7 +172,7 @@ func (h *handler) generateDefaultDeployment(cluster *clusterv1alpha1.Cluster, pr
 			{
 				Kind:      rbacv1.ServiceAccountKind,
 				Name:      "tower",
-				Namespace: constants.KubeSphereNamespace,
+				Namespace: kubeSphereNamespace,
 			},
 		},
 	}
@@ -185,7 +183,7 @@ func (h *handler) generateDefaultDeployment(cluster *clusterv1alpha1.Cluster, pr
 		},
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "cluster-agent",
-			Namespace: constants.KubeSphereNamespace,
+			Namespace: kubeSphereNamespace,
 		},
 		Spec: appsv1.DeploymentSpec{
 			Selector: &metav1.LabelSelector{
