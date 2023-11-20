@@ -9,6 +9,12 @@ rules:
   - verbs:
       - '*'
     apiGroups:
+      - ''
+    resources:
+      - 'configmaps'
+  - verbs:
+      - '*'
+    apiGroups:
       - 'apps'
     resources:
       - 'deployments'
@@ -18,6 +24,12 @@ rules:
       - 'extensions.kubesphere.io'
     resources:
       - 'apiservices'
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'cluster.kubesphere.io'
+    resources:
+      - '*'
 
 ---
 kind: Role
