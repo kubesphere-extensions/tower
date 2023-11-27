@@ -2,7 +2,7 @@ replicaCount: 1
 serviceAccountName: kubesphere
 
 image:
-  repository: kubesphereio/tower
+  repository: kubesphere/tower
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v0.2.1"
