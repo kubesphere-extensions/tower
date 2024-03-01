@@ -33,5 +33,10 @@ func getFromConfigMap(cm *corev1.ConfigMap) (*Config, error) {
 	if err := yaml.Unmarshal([]byte(value), c); err != nil {
 		return nil, err
 	}
+	if c.MultiClusterOptions.AgentImage == "" {
+		// The default value that is consistent with the image version in the chart,
+		// which can reduce user configuration items in most scenarios.
+		c.MultiClusterOptions.AgentImage = "kubesphere/tower:v0.2.1"
+	}
 	return c, nil
 }
