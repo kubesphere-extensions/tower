@@ -7,10 +7,10 @@ replicaCount: 1
 image:
   repository: iawia002/tower-extension
   pullPolicy: IfNotPresent
+  pullSecrets: []
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1.0.0"
 
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 

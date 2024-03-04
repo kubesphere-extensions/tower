@@ -24,6 +24,7 @@ spec:
         app.kubernetes.io/name: tower
     spec:
       serviceAccountName: {{ .Values.serviceAccountName }}
+      {{- include "imagePullSecrets" . | nindent 6 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -38,7 +39,7 @@ spec:
       {{- end }}
       containers:
         - name: tower
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: {{ template "image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
             - /proxy
