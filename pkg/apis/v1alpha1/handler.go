@@ -85,10 +85,6 @@ func (h *handler) populateProxyAddressAndImage() (string, string, error) {
 		return kubeSphereConfig.MultiClusterOptions.ProxyPublishAddress, kubeSphereConfig.MultiClusterOptions.AgentImage, nil
 	}
 
-	if kubeSphereConfig.MultiClusterOptions.ProxyPublishService == "" {
-		return "", "", fmt.Errorf("neither proxy address nor proxy service provided")
-	}
-
 	// use service ingress address
 	namespace := kubeSphereNamespace
 	parts := strings.Split(kubeSphereConfig.MultiClusterOptions.ProxyPublishService, ".")

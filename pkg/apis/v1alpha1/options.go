@@ -38,5 +38,8 @@ func getFromConfigMap(cm *corev1.ConfigMap) (*Config, error) {
 		// which can reduce user configuration items in most scenarios.
 		c.MultiClusterOptions.AgentImage = "kubesphere/tower:v0.2.1"
 	}
+	if c.MultiClusterOptions.ProxyPublishService == "" {
+		c.MultiClusterOptions.ProxyPublishService = "tower.kubesphere-system.svc"
+	}
 	return c, nil
 }
